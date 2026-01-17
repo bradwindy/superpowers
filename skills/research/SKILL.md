@@ -342,6 +342,51 @@ Before saving, verify all 8 agents' findings are incorporated:
 
 The Executive Summary and Edge Cases sections should be YOUR synthesis, not raw agent output. These sections demonstrate combined findings.
 
+### Phase 3.5: Assumption Validation
+
+After synthesis completes, validate technical assumptions:
+
+1. **Dispatch assumption checker agent**
+   ```
+   Task(description: "Validate research assumptions",
+        prompt: "[Include full research document content here]
+
+   Validate all technical assumptions in this research document.
+   Return structured output with Validated/Invalid/Unverified sections.",
+        model: "haiku",
+        subagent_type: "hyperpowers:research:assumption-checker")
+   ```
+
+2. **Parse agent output**
+   - Extract the Validated Assumptions section
+   - Count invalid assumptions (❌ items)
+
+3. **Embed results in research document**
+   - Add "## Validated Assumptions" section before "## Open Questions"
+   - Include all three subsections (✅/❌/⚠️)
+
+4. **If invalid assumptions found**
+   ```
+   AskUserQuestion(
+     questions: [{
+       question: "Found N invalid assumptions in research. How would you like to proceed?",
+       header: "Assumptions",
+       options: [
+         {label: "Review and address", description: "Pause to fix invalid assumptions before saving"},
+         {label: "Continue anyway", description: "Save research with invalid assumptions noted"},
+         {label: "Show details", description: "Display full validation report"}
+       ],
+       multiSelect: false
+     }]
+   )
+   ```
+
+5. **Proceed to Phase 4 (Save) after user response**
+
+**Error Handling:**
+- If agent times out: Note "Assumption validation incomplete" in document, proceed to save
+- If no assumptions found: Note "No technical assumptions to validate" in document
+
 ### Phase 4: Save Research Document
 
 Save to: `docs/research/YYYY-MM-DD-<topic-slug>.md`
@@ -380,6 +425,7 @@ Replace `<actual-filename>` with the real filename you just created.
 | 2 | Dispatch 8 agents | Parallel research |
 | 2.5 | Discover issues | Related issues list |
 | 3 | Synthesize | Combined findings |
+| 3.5 | Validate assumptions | Validated Assumptions section |
 | 4 | Save | `docs/research/YYYY-MM-DD-topic.md` |
 | 5 | Announce | Ready for planning |
 
