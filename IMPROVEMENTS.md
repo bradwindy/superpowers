@@ -22,6 +22,7 @@ This document details all significant improvements made to Hyperpowers since for
 - [11. Issue Tracking Abstraction](#11-issue-tracking-abstraction)
 - [12. Issue Context Preservation](#12-issue-context-preservation)
 - [13. Skill Instruction Following Improvements](#13-skill-instruction-following-improvements)
+- [14. Assumption Validation](#14-assumption-validation)
 
 ---
 
@@ -708,6 +709,58 @@ All 17 skills received the 8-pattern treatment:
 
 ---
 
+## 14. Assumption Validation
+
+Added assumption checker agent that validates technical assumptions in research documents and implementation plans against online sources before saving. Catches outdated API information, deprecated patterns, and incorrect assumptions before they propagate to implementation.
+
+**Commits:** `c13ab76`, `f5d01d5`, `bf57827`, `2b2f4c5`, `efbb5aa`, `ba56f5c`, `c9ebf61`, `16e84ac`
+
+### The Problem
+
+Research documents and implementation plans often contain technical assumptions that may be:
+- Based on outdated API documentation
+- Using deprecated patterns or libraries
+- Incorrect understanding of framework behavior
+- Stale version requirements
+
+These assumptions propagate through the workflow chain (research → plan → implementation) and cause implementation failures or technical debt.
+
+### Solution: Assumption Checker Agent
+
+Created a specialized agent that validates assumptions against live web sources before documents are saved.
+
+**Agent:** `agents/research/assumption-checker.md`
+
+**Integration Points:**
+- **Research Skill Phase 3.5**: Validates assumptions after synthesis, before saving research document
+- **Writing-Plans Pre-Save**: Validates technical assumptions before plan is finalized
+
+**Validation Categories:**
+- API signatures and behavior
+- Framework/library version compatibility
+- Deprecated patterns or methods
+- Configuration requirements
+- Third-party service integrations
+
+### Key Features
+
+**Targeted Web Validation:**
+- Extracts specific technical claims from documents
+- Searches official documentation and trusted sources
+- Cross-references against current information
+
+**Structured Output:**
+- Clear pass/fail indicators for each assumption
+- Sources cited for validation
+- Suggested corrections for invalid assumptions
+
+**Non-Blocking Integration:**
+- Validation failures are reported but don't block workflow
+- User can acknowledge and proceed if assumptions are acceptable
+- Maintains workflow velocity while adding safety net
+
+---
+
 ## Summary Statistics
 
 | Category | Commits | Impact |
@@ -725,6 +778,7 @@ All 17 skills received the 8-pattern treatment:
 | Issue Tracking Abstraction | ~11 | System-agnostic tracker support |
 | Issue Context Preservation | ~8 | Requirements preserved through workflow chain |
 | Skill Instruction Following | ~20 | Research-backed pattern application to all skills |
+| Assumption Validation | ~8 | Technical assumption verification before save |
 
 ---
 
