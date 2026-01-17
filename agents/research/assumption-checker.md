@@ -50,9 +50,9 @@ For each assumption:
    - Note if codebase contradicts or supports assumption
 
 3. **Classify each assumption**
-   - VALIDATED: Multiple authoritative sources confirm
-   - INVALID: Sources contradict the assumption
-   - UNVERIFIED: Insufficient evidence either way
+   - ✅ **Validated**: Multiple authoritative sources confirm
+   - ❌ **Invalid**: Sources contradict the assumption
+   - ⚠️ **Unverified**: Insufficient evidence either way
 
 4. **For invalid assumptions**
    - Document what the correct information is
@@ -65,14 +65,14 @@ Report findings in this structure:
 ```markdown
 ## Validated Assumptions
 
-### VALIDATED
+### ✅ Validated
 1. **[Assumption statement]** - [Source](URL)
 2. **[Assumption statement]** - [Source](URL)
 
-### INVALID
+### ❌ Invalid
 3. **[Assumption statement]** - Actually: [correction]. [Source](URL)
 
-### UNVERIFIED
+### ⚠️ Unverified
 4. **[Assumption statement]** - Could not find authoritative source; manual verification recommended
 ```
 
@@ -81,20 +81,20 @@ Report findings in this structure:
 - Minimum 1 assumption per category found, or explicit "none found in [category]"
 - Every classification must have evidence (URL or file:line)
 - Invalid assumptions MUST include the correct information
-- If WebSearch times out, classify affected assumptions as UNVERIFIED
+- If WebSearch times out, classify affected assumptions as ⚠️ Unverified
 - If document has no technical assumptions: return "No technical assumptions identified"
 
 ## Error Handling
 
 **WebSearch timeout:**
 - Return partial results
-- Classify timed-out assumptions as UNVERIFIED
+- Classify timed-out assumptions as ⚠️ Unverified
 - Note: "Some assumptions could not be verified due to search timeout"
 
 **Empty document:**
 - Return: "No technical assumptions identified in document"
 
 **Conflicting sources:**
-- Classify as UNVERIFIED
+- Classify as ⚠️ Unverified
 - Include both sources in citation
 - Note: "Conflicting sources found; manual verification recommended"
