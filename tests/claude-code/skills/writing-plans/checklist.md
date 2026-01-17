@@ -42,6 +42,14 @@
 - [ ] Plan addresses at least one open question from research
 - [ ] Architecture approach traces back to research recommendations
 
+## Assumption Validation Gate (COMPULSORY)
+- [ ] Assumption checker agent dispatched before save
+- [ ] Agent output parsed for Validated/Invalid/Unverified sections
+- [ ] Results embedded in plan as "## Validated Assumptions"
+- [ ] AskUserQuestion used if invalid assumptions found
+- [ ] User response received before proceeding to save
+- [ ] Or: timeout/error handled gracefully with note in plan
+
 ## Evidence Requirements
 - [ ] Session shows research document being found
 - [ ] Session shows research document content being read
