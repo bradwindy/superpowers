@@ -53,6 +53,14 @@
 - [ ] Open Questions section identifies unresolved items
 - [ ] Research doc saved to docs/research/ directory
 
+## Assumption Validation Gate (COMPULSORY)
+- [ ] Assumption checker agent dispatched after synthesis
+- [ ] Agent output parsed for Validated/Invalid/Unverified sections
+- [ ] Results embedded in research document as "## Validated Assumptions"
+- [ ] AskUserQuestion used if invalid assumptions found
+- [ ] User response received before proceeding to save
+- [ ] Or: timeout/error handled gracefully with note in document
+
 ## Open Questions Handling (COMPULSORY)
 - [ ] Design doc open questions extracted
 - [ ] Each open question addressed in Resolved Questions section
@@ -67,3 +75,6 @@
 - [ ] Session shows checklist verification
 - [ ] Research document shows clear agent attribution
 - [ ] Research document has substantive content in all sections
+- [ ] Session shows Task call for assumption-checker agent
+- [ ] Session shows parsing of assumption validation results
+- [ ] Research document contains Validated Assumptions section
